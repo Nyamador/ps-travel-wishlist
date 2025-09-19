@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Wishlist Demo
+
+A tiny Next.js demo that showcases client-side data persistence (IndexedDB and localStorage) for creating and managing a travel wishlist, with simple offline-friendly behavior.
 
 ## Getting Started
 
-First, run the development server:
+### Installation
+
+First, install the dependencies:
+
+Using npm:
+
+```bash
+npm install
+```
+
+Using Yarn:
+
+```bash
+yarn install
+```
+
+### Run the dev server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build and run in production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+# or
+yarn build
+yarn start
+```
 
-## Learn More
+## Available scripts
 
-To learn more about Next.js, take a look at the following resources:
+- **dev**: Start Next.js in development mode (uses Turbopack).
+- **build**: Create an optimized production build (Turbopack).
+- **start**: Start the production server.
+- **lint**: Run ESLint.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Travel wishlist CRUD**: Add, view, and manage destinations.
+- **IndexedDB persistence**: Durable storage via a small helper in `lib/idb.ts`.
+- **LocalStorage flags**: Simple UI/session flags via `hooks/use-session-flag.ts`.
+- **Offline-friendly**: Data remains available without a network connection.
+- **Theme support**: Light/dark mode using `next-themes`.
 
-## Deploy on Vercel
+## Tech stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js 15** (App Router)
+- **React 19**
+- **Tailwind CSS 4**
+- **idb** (IndexedDB helper)
+- **next-themes** (theme switching)
+- **lucide-react** (icons)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Requirements
+
+- Node.js 18+
+- npm or Yarn

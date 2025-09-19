@@ -1,0 +1,82 @@
+🌍 Globomantics Travel Wishlist App – PRD Checklist
+
+1. Overview
+	•	Goal: Build a web app where users can create and manage a travel wishlist.
+	•	Tech Stack: Next.js 14, React 18, Node.js 20, Yarn 1.x.
+	•	Key Focus: Demonstrate client-side data persistence using Local Storage, Session Storage, and IndexedDB.
+
+⸻
+
+2. Core Features
+
+A. Destination Management
+	•	Add new destinations (name + optional notes).
+	•	Edit destination details.
+	•	Mark destination as visited / not visited.
+	•	Remove destinations from the list.
+
+B. Notes & Metadata
+	•	Allow users to add/edit short notes per destination.
+	•	Store date added automatically.
+	•	Track visited status.
+
+C. Theming
+	•	Dark mode / Light mode toggle.
+	•	Persist user’s theme preference using Local Storage.
+
+D. Filtering & Temporary State
+	•	“Show visited only” filter toggle.
+	•	Persist filter state in Session Storage.
+	•	Filter resets when the browser tab is closed.
+
+E. Data Persistence
+	•	Store structured destination data in IndexedDB:
+	•	Destination name
+	•	Notes
+	•	Date added
+	•	Visited status
+	•	Support offline access (data available without internet).
+
+⸻
+
+3. Technical Requirements
+
+A. Local Storage
+	•	Save & retrieve theme preference.
+	•	Update UI immediately on toggle.
+
+B. Session Storage
+	•	Save & retrieve active filter state.
+	•	Reset on tab close.
+
+C. IndexedDB
+	•	Create database travelWishlistDB.
+	•	Object store: destinations.
+	•	Fields: id, name, notes, dateAdded, visited.
+	•	Enable add, update, delete, and query operations.
+	•	Handle async IndexedDB API with Promises/async–await.
+
+⸻
+
+4. UI/UX Requirements
+	•	Minimal responsive layout (desktop + mobile).
+	•	Input form: Destination name + optional notes.
+	•	List view: All destinations with visited toggle + delete button.
+	•	Filter: Show visited only / show all.
+	•	Theme switcher (dark/light).
+	•	Clear error messages if data operations fail.
+
+⸻
+
+5. Demos (for course alignment)
+	•	Show how data is visible in Chrome DevTools (Application tab).
+	•	Demonstrate Local Storage for theme.
+	•	Demonstrate Session Storage for filter state.
+	•	Demonstrate IndexedDB for structured data & offline persistence.
+
+⸻
+
+6. Stretch Goals (Optional)
+	•	Search destinations by name.
+	•	Sort by date added.
+	•	Export/import wishlist (JSON file).
