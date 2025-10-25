@@ -1,11 +1,28 @@
 "use client"
+import WishlistForm from "@/components/form"
 import { Button } from "@/components/ui/button"
 import * as React from "react"
 import { useEffect, useState } from "react"
 
+export type Destination = {
+  id?: number
+  name: string
+  notes?: string
+  dateAdded: string
+  visited?: boolean
+  imageUrl?: string
+}
 export default function Home() {
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [destinations, setDestinations] = useState<Array<Destination>>([])
+  const [editingId, setEditingId] = useState<number | undefined>(undefined)
+
+  useEffect(() => {
+    const stored = localStorage.getItem("destinations")
+    const loadedDestinations = stored ? JSON.parse(stored) : []
+    setDestinations(loadedDestinations)
+  }, [])
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme")
@@ -18,14 +35,30 @@ export default function Home() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
-
   const toggleTheme = () => {
     const newTheme = isDark ? "light" : "dark"
     document.documentElement.classList.toggle("dark", newTheme === "dark")
     localStorage.setItem("theme", newTheme)
     setIsDark(newTheme === "dark")
   }
+
+  function saveDestinations(items: Destination[]) {
+    localStorage.setItem("destinations", JSON.stringify(items))
+  }
+
+  async function addDestination(destination: Destination) {
+    const newDestinations = [...destinations, destination]
+    setDestinations(newDestinations)
+    saveDestinations(newDestinations)
+  }
+
+  async function deleteDestination(id: number) {
+    const newDestinations = destinations.filter((item) => item.id !== id)
+    setDestinations(newDestinations)
+    saveDestinations(newDestinations)
+  }
+
+  if (!mounted) return null
 
   return (
     <div className="max-w-3xl mx-auto w-full p-6 space-y-8">
@@ -38,9 +71,64 @@ export default function Home() {
         </div>
       </header>
 
-      <ul className="space-y-3">
-        <p>No destinations yet</p>
-      </ul>
+      <WishlistForm onSubmit={addDestination} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {destinations.map((item) => (
+          <div key={item.id} className="rounded-lg border overflow-hidden">
+            <div className="relative aspect-video bg-muted">
+              {item.imageUrl ? (
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 grid place-items-center text-muted-foreground">
+                  <img
+                    src="/globe.svg"
+                    alt="placeholder"
+                    width={64}
+                    height={64}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="p-3 flex flex-col gap-2">
+              <div className="font-medium line-clamp-1">{item.name}</div>
+              {item.notes && (
+                <div className="text-sm text-muted-foreground whitespace-pre-wrap line-clamp-3">
+                  {item.notes}
+                </div>
+              )}
+              <div className="text-xs text-muted-foreground mt-1">
+                Added {new Date(item.dateAdded).toLocaleString()}
+              </div>
+              <div className="mt-2 flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setEditingId(item.id!)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => deleteDestination(item.id!)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {destinations.length === 0 && (
+        <ul className="space-y-3">
+          <p>No destinations yet</p>
+        </ul>
+      )}
     </div>
   )
 }
