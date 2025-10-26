@@ -18,14 +18,14 @@ export default function Home() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
-
   const toggleTheme = () => {
     const newTheme = isDark ? "light" : "dark"
     document.documentElement.classList.toggle("dark", newTheme === "dark")
     localStorage.setItem("theme", newTheme)
     setIsDark(newTheme === "dark")
   }
+
+  if (!mounted) return null
 
   return (
     <div className="max-w-3xl mx-auto w-full p-6 space-y-8">
